@@ -1,6 +1,5 @@
 const mysql = require("mysql");
 const dbConfig = require("./db.config");
-
 module.exports = {
   query: function (sql, params, callback) {
     //每次使用的时候需要创建链接，数据操作完成之后要关闭连接

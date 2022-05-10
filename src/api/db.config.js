@@ -1,4 +1,4 @@
-// 创建mysql连接
+// 创建mysql数据库信息
 module.exports = {
   host: "localhost", // 服务器地址
   user: "root", // mysql用户名称

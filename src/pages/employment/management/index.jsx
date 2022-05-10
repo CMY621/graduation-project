@@ -205,7 +205,7 @@ export default class index extends Component {
     })
       .then((res) => {
         this.setState({
-          dataSource: res.data.results,
+          dataSource: res.data.results.reverse(),
           total: res.data.results.length,
           addVisible: false,
         });
@@ -229,15 +229,17 @@ export default class index extends Component {
     this.queryStudent(sql);
   };
 
-  // 检查新增的学号是否在学生表中存在的，在学生就业表中不存在
+  // 验证新增的学号
   checkStudentId = async (id) => {
     const sql = `SELECT * FROM student WHERE student_id = '${id}'`;
+    // 先判断该学号学生信息是否存在
     const res = await axios({
       method: "post",
       url: "/api",
       data: { sql, type: "query" },
     });
     if (res.data.results.length > 0) {
+      // 若存在则判断该学号学生就业状态信息是否已经录入
       const theSql = `SELECT * FROM employment WHERE student_id = '${id}'`;
       const employmentRes = await axios({
         method: "post",
@@ -245,6 +247,7 @@ export default class index extends Component {
         data: { sql: theSql, type: "query" },
       });
       if (employmentRes.data.results.length === 0) {
+        // 若没有，验证通过
         return true;
       } else {
         message.error("该学号学生就业信息已存在！");
@@ -258,19 +261,16 @@ export default class index extends Component {
 
   // 新增事件
   add = async (values) => {
-    let value = {
-      ...values,
-    };
-    // 新增前先判断新增的学号是否存在
+    // 新增前先验证新增的学号
     const flag = await this.checkStudentId(values.student_id);
     if (!flag) {
       this.queryPanelRef.changeState();
       return;
     }
-    let sql = `INSERT INTO employment (${Object.keys(value)}) VALUES `;
+    let sql = `INSERT INTO employment (${Object.keys(values)}) VALUES `;
     let row = "";
-    Object.values(value).forEach((ele, i) => {
-      i === Object.values(value).length - 1
+    Object.values(values).forEach((ele, i) => {
+      i === Object.values(values).length - 1
         ? (row += `'${ele}'`)
         : (row += `'${ele}',`);
     });

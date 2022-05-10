@@ -44,7 +44,6 @@ app.post("/api/loginInfo", (req, res) => {
 });
 
 app.post("/api", (req, res) => {
-  // sql查询user表
   console.log(req.body);
   const params = req.body.type || "query";
   db.query(req.body.sql, params, function (results, fields) {

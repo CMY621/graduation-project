@@ -66,7 +66,7 @@ class EditForm extends Component {
     return <div className="form-field-error">Error Field#{type}</div>;
   };
 
-  //确认新增
+  //确认修改
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.form.validateFields(async (err, values) => {

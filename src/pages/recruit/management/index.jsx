@@ -156,7 +156,7 @@ export default class index extends Component {
     })
       .then((res) => {
         this.setState({
-          dataSource: res.data.results,
+          dataSource: res.data.results.reverse(),
           total: res.data.results.length,
           addVisible: false,
         });

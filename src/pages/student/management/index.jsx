@@ -192,7 +192,7 @@ export default class index extends Component {
     })
       .then((res) => {
         this.setState({
-          dataSource: res.data.results,
+          dataSource: res.data.results.reverse(),
           total: res.data.results.length,
           addVisible: false,
         });
@@ -303,7 +303,7 @@ export default class index extends Component {
           });
           message.success(res.data.results.res);
         } else {
-          message.error("添加失败，请重试！");
+          message.error("删除失败，请重试！");
         }
       })
       .catch((err) => {
