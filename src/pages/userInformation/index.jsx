@@ -279,6 +279,7 @@ export default class index extends Component {
       return false;
     }
   };
+  // 注册新用户
   addUserBtn = () => {
     this.setState({ registerVisible: true });
   };
